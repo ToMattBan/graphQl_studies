@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "npm run start-server & npm run start-browserSync",
-    "start-server": "node ./server.js",
+    "start-server": "node ./server/server.js",
     "start-browserSync": "browser-sync start --server --files './index.html'"
   },
   "author": "",

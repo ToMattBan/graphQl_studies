@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <div>Hello: <span id="hello"></span> </div>
   <div>Dices Rolls: <span id="dicesRolls"></span> </div>
 
   <script type="module">
@@ -27,15 +28,25 @@
 
       return data;
     }
+    
+    async function hello() {
+      var query = `{ hello }`
 
-    var dices = 3;
-    var sides = 6;
-    var query = `query RollDice($dices: Int!, $sides: Int) {
-      rollDice(numDice: $dices, numSides: $sides)
-    }`;
+      var helloMessage = await post('http://localhost:3000/hello', query);
+      document.querySelector('#hello').innerText = JSON.stringify(helloMessage.data.hello);
+    };
 
-    var diceRolls = await post('http://localhost:3000/rollDices', query, { dices, sides })
-    document.querySelector('#dicesRolls').innerText = JSON.stringify(diceRolls);
+    async function rolldices(dices, sides) {
+      var query = `query RollDice($dices: Int!, $sides: Int) {
+        rollDice(numDice: $dices, numSides: $sides)
+      }`;
+  
+      var diceRolls = await post('http://localhost:3000/rollDices', query, { dices, sides })
+      document.querySelector('#dicesRolls').innerText = JSON.stringify(diceRolls.data.rollDice);
+    }
+
+    hello();
+    rolldices(5, 20)
   </script>
 </body>
 

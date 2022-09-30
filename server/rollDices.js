@@ -1,6 +1,4 @@
-var app = require('express')();
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
+import { buildSchema } from 'graphql';
 
 var schema = buildSchema(`
   type Query {
@@ -9,7 +7,7 @@ var schema = buildSchema(`
 `);
 
 var rootValue = {
-  rollDice: ({numDice, numSides}) => {
+  rollDice: ({ numDice, numSides }) => {
     numSides = numSides ?? 6;
     var output = [];
 
@@ -21,10 +19,7 @@ var rootValue = {
   },
 };
 
-app.use('/rollDices', graphqlHTTP({
+export default {
   schema,
-  rootValue,
-  graphiql: true
-}));
-
-app.listen(3000);
+  rootValue
+}
